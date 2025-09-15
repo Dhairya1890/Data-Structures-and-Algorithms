@@ -12,13 +12,13 @@ using namespace std;
 
 class Node{  // We need a class to make the basic structure of Node 
     public:  // Always remember to write access modifier 'public'
-    int data, // this item stores the data
+    int data; // this item stores the data
     Node *next; // this stores the reference to next node, set to NULL by default
 
     Node(int data){  // this is a parameterized contructor, called when an object 
                      // of the same class is made, this initializes the data field
                      // to the passed value, and sets the next pointer to null
-        this.data = data; 
+        this->data = data; 
         next = NULL;
     }
 };
@@ -38,7 +38,7 @@ void InsertAtBegin(int value){
         Node *newNode = new Node(value);
         Node *temp = Head;
         Head = newNode;
-        newNode->next = temp
+        newNode->next = temp;
     }
 }
 
@@ -55,4 +55,46 @@ void display(){
     }
 }
 
+void deleteAStart(Node *node){
+    if(node == Head){
+        Head = node->next;
+        delete node;
+    }
+}
+
+void deleteAtMiddle(Node *node){
+    Node *temp = Head;
+    while(temp->next != node){
+        temp = temp->next;        
+    }
+    Node *todelete = temp->next;
+    temp->next = todelete->next;
+    delete todelete;
+}
+
+void Delete(int value){
+    Node *node = Head;
+    while(node->data != value){
+        node = node->next;
+    }
+    if(node == Head){
+        deleteAStart(node);
+    }
+    else{
+        deleteAtMiddle(node);
+    }
+}
+
+int main(){
+    
+    InsertAtBegin(30);
+    InsertAtBegin(20);
+    InsertAtBegin(10);
+
+    display();
+    Delete(30);
+    Delete(10);
+
+    display();
+}
 
